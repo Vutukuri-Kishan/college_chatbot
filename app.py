@@ -7,18 +7,18 @@ from chatbot import get_answer
 
 app = FastAPI()
 
-# Ensure 'static' directory exists to prevent errors
-if not os.path.exists("static"):
-    os.makedirs("static")
-
 # Mount the 'static' folder for frontend files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+static_dir = os.path.join(os.getcwd(), "static")
+if not os.path.exists(static_dir):
+    os.makedirs(static_dir)
+
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend():
-    index_path = "static/index.html"
+    index_path = os.path.join(static_dir, "index.html")
     if not os.path.exists(index_path):
-        return HTMLResponse(content="<h1>Frontend not found. Please deploy your static files.</h1>", status_code=404)
+        return HTMLResponse(content="<h1>Static index.html not found</h1>", status_code=404)
     
     with open(index_path, "r", encoding="utf-8") as f:
         return HTMLResponse(content=f.read())
@@ -31,5 +31,5 @@ async def chat(request: Request):
     return {"answer": answer}
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))  # Use Render's assigned port
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 8000))  # Use environment variable for port
+    uvicorn.run("app:app", host="0.0.0.0", port=port)

@@ -7,7 +7,7 @@ from fuzzywuzzy import process
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Load the Dataset
-df = pd.read_csv("college_data.csv", encoding="ISO-8859-1")
+df = pd.read_csv("data/college_data.csv", encoding="ISO-8859-1")
 
 # Convert Questions to Embeddings (for SBERT)
 df["question"] = df["question"].str.strip().str.lower()  # Normalize dataset questions

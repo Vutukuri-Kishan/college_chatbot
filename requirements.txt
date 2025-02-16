@@ -1,5 +1,7 @@
+fastapi
+uvicorn
+gunicorn
 pandas==1.5.3
 numpy==1.24.2
 sentence-transformers==2.2.2
-streamlit==1.30.0
 torch==2.1.0

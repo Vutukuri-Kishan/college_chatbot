@@ -1,8 +1,8 @@
 import os
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
-import uvicorn
 from chatbot import get_answer
 
 app = FastAPI()
